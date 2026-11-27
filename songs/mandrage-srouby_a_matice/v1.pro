@@ -1,63 +1,73 @@
 {title: Šrouby a matice}
 {artist: Mandrage}
-{key: G}
+{key: A}
 {capo: 0}
-{range: e1-d1}
+{range: f#1-e1}
 {language: czech}
-{startMelody: h}
+{startMelody: c#}
 {illustrationId: mandrage-srouby_a_matice_gpt-4o-mini_v1_flux.1-dev}
 {promptId: mandrage-srouby_a_matice_gpt-4o-mini_v1}
 
+{start_of_interlude}
+[A][E][Hm][D][E]
+{end_of_interlude}
+
 {start_of_verse}
-Mezi zemí a neb[G]em
-A širým [D]světem
-Je jeden [Ami]náš
-Tak dobře ho [C]znáš [D]
-Mezi nebem a [G]zemí
-Jsou věci [D]který
-Moje milá
-Můžu jen [C]já [D]
+Mezi zemí a neb[A]em
+A širým [E]světem
+Je jeden [Hm]náš
+Tak dobře ho [D]znáš [E]
+Mezi nebem a [A]zemí
+Jsou věci [E]který
+Moje milá[Hm]
+Můžu jen [D]já [E]
 {end_of_verse}
 
-{start_of_chorus}
-Tahat tě [G]za vlasy,
-dýchat ti [D]do tváře,
-Dělat si [Ami]nároky
-na tvoje [C]polštáře
-Sahat ti [G]pod sukni,
-kousat tě [D]na ruce
-Dělat ti [Ami]snídani,
-říkat ti [C]opice.
+{start_of_chorus: R1}
+Tahat tě [A]za vlasy,
+dýchat ti [E]do tváře,
+Dělat si [Hm]nároky
+na tvoje [D]polštáře
+Sahat ti [A]pod sukni,
+kousat tě [E]na ruce
+Dělat ti [Hm]snídani,
+říkat ti [D]opice.
 {end_of_chorus}
 
 {start_of_verse}
-Mezi světlem a [G]nocí
-Houpu tě v [D]bocích
-Na tisíc[Ami]krát
-Dělám to [C]rád [D]
-Mezi nocí a [G]světlem
-Zimou i [D]létem
-Je spousta [Ami]rán,
-kdy můžu jen [C]sám [D]
+Mezi světlem a [A]nocí
+Houpu tě v [E]bocích
+Na tisíc[Hm]krát
+Dělám to [D]rád [E]
+Mezi nocí a [A]světlem
+Zimou i [E]létem
+Je spousta [Hm]rán,
+kdy můžu jen [D]sám [E]
 {end_of_verse}
 
-{chorus}
+{chorus: R1}
 
-{start_of_chorus}
-Platit ti [G]výdaje,
-prdět si vě [D]vaně
-Kvůli tvé [Ami]pověsti
-porvat [C]se v hospodě
-nosit ti [G]lekníny,
-vrtat ti poli[D]ce.
-Jsme čase[Ami]m kalený
-šrouby a [C]matice (2x)
+{start_of_chorus: R2}
+Platit ti [A]výdaje,
+prdět si vě [E]vaně
+Kvůli tvé [Hm]pověsti
+porvat [D]se v hospodě
+nosit ti [A]lekníny,
+vrtat ti [E]police.
+Jsme časem [Hm]kalený
+šrouby a [D]matice
 {end_of_chorus}
 
+{interlude}
+
+{chorus: R1}
+
+{chorus: R2}
+
 {start_of_chorus}
-Vysoko [G]nad zemí,
-životem [D]kalený,
-navěky [Ami]spojení.
-Šrouby a [C]matice
-𝄆 Šrouby a [G]matice 𝄇 (4x)
+Vysoko [A]nad zemí,
+životem [E]kalený,
+navěky [Hm]spojení.
+Šrouby a [D]matice
+𝄆 Šrouby a [A]matice 𝄇 (4x)
 {end_of_chorus}

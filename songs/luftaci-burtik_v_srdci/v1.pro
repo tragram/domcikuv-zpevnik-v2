@@ -9,10 +9,15 @@
 {promptId: luftaci-burtik_v_srdci_gpt-5.4-mini_v7}
 
 {start_of_verse}
-[Am]Kam tenhle svět pádí, kde [Dm]staví tenhle [Am]vlak
-kam [F]mizí moje [Am]mládí, kam [H7]odcházejí [E7]kamarádi
-[Am]už je dávno pryč ten starej [Dm]svět kdy maso bylo maso
-[F]muž byl mužem, [E]žena ženou a [Am]oheň nás [G]hřál
+[Am]Kam tenhle svět pádí,
+kde [Dm]staví tenhle [Am]vlak
+kam [F]mizí moje [Am]mládí,
+kam [H7]odcházejí [E7]kamarádi
+
+[Am]Už je dávno pryč ten starej
+[Dm]svět kdy maso bylo maso
+[F]muž byl mužem, [E]žena ženou
+a [Am]oheň nás [G]hřál
 {end_of_verse}
 
 {start_of_chorus}
@@ -27,24 +32,35 @@ kam [F]mizí moje [Am]mládí, kam [H7]odcházejí [E7]kamarádi
 {end_of_verse}
 
 {start_of_verse}
-[Am]Proč nemůžu džípem [Dm]vjet na Karlův [Am]most
-[F]proč v hospodě si [Am]nezapálim, [H7]už toho mám dost [E7]
-[Am]a uzeniny sojový, kdy [Dm]rozevřou se, kdo to ví
-[F]pryč jsou časy, [E]kdy jsme mohli [Am]v klidu tady [G]žít
+[Am]Proč nemůžu džípem
+[Dm]vjet na Karlův [Am]most
+[F]proč v hospodě si [Am]nezapálim,
+[H7]už toho mám dost [E7]
+
+[Am]A uzeniny sojový,
+kdy [Dm]rozevřou se, kdo to ví
+[F]pryč jsou časy, [E]kdy jsme mohli
+[Am]v klidu tady [G]žít
 {end_of_verse}
 
 {chorus}
 
 {chorus}
 
-{start_of_verse}
-Rec: [Ami]Už nehoníme se za sny, je to všechno mastný
-seš poslední, tak zhasni - já jdu tiše pít
-vzpomínej na to, co znáš od mala
-už ani ta budoucnost není co bejvala
+{start_of_verse: Recitativ}
+[Ami]Už nehoníme se za sny,
+je to všechno mastný
+seš poslední, tak zhasni
+já jdu tiše pít
 
-Jen jediná je jistota, jen jediná je jistota,
-jen jediná je jistota, jen jediná je jistota
+Vzpomínej na to,
+co znáš od mala
+už ani ta budoucnost
+není co bejvala
+
+
+{comment: Postupná gradace:}
+𝄆 Jen jediná je jistota 𝄇 (4x)
 {end_of_verse}
 
 {start_of_variant: prepend_content}

@@ -16,10 +16,15 @@ a [C]stáj že svýho [D]koně nepozn[E]á.
 {end_of_verse}
 
 {start_of_chorus}
-Řekni, [G]kolik je na světě, kolik je takovejch [D]měst,
-řekni, [Ami]kdo by se vracel, všude je tisíce [Emi]cest,
-tenkrát, [G]když jsi mi, Terezo, řekla, že ráda mě [D]máš,
-tenkrát [Ami]ptal jsem se, Terezo, kolik mi polibků [Emi]dáš
+Řekni, [G]kolik je na světě,
+kolik je takovejch [D]měst,
+řekni, [Ami]kdo by se vracel,
+všude je tisíce [Emi]cest.
+
+Tenkrát, [G]když jsi mi, Terezo,
+řekla, že ráda mě [D]máš,
+tenkrát [Ami]ptal jsem se, Terezo,
+kolik mi polibků [Emi]dáš
 naposl[D]ed, naposl[G]ed.
 {end_of_chorus}
 

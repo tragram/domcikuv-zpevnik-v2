@@ -4,8 +4,8 @@ versions:
   v1:
     id: green_day-boulevard_of_broken_dreams_1439503200000
     createdAt: '2015-08-13T22:00:00.000Z'
-    updatedAt: '2026-02-08T17:33:53.000Z'
-    revision: 1
+    updatedAt: '2026-11-26T13:37:41.000Z'
+    revision: 2
     youtubeId: Soa3gO7tL-c
 prompts:
   - id: green_day-boulevard_of_broken_dreams_gpt-4o-mini_v1

@@ -5,8 +5,6 @@
 {range: d1-g2}
 {language: czech}
 {startMelody: a a g a}
-{illustrationId: lucie-chci_zas_v_tobe_spat_gpt-4o-mini_v1_flux.1-dev}
-{promptId: lucie-chci_zas_v_tobe_spat_gpt-4o-mini_v1}
 
 {start_of_verse: Intro}
 𝄆 [G][G/F#][Emi][C add9] 𝄇

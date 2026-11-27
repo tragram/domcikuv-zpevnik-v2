@@ -1,0 +1,29 @@
+songId: lucie-srouby_do_hlavy
+official: v1
+versions:
+  v1:
+    id: lucie-srouby_do_hlavy_1785536694011
+    createdAt: '2026-07-31T22:24:54.000Z'
+    updatedAt: '2026-11-26T22:10:09.000Z'
+    revision: 2
+    youtubeId: vTiEwF0orM8
+prompts:
+  - id: lucie-srouby_do_hlavy_gemini-3.5-flash-lite_v9
+    songId: lucie-srouby_do_hlavy
+    summaryPromptVersion: v9
+    summaryModel: gemini-3.5-flash-lite
+    text: >-
+      Cinematic dark moody illustration of a lone angry man standing on a
+      deserted street at night, hands in his pockets, watching a single glowing
+      window in a row of dark apartment buildings. In the foreground, he is
+      dropping a burning match into dry grass, creating small glowing embers.
+      Melancholy yet rebellious atmosphere, deep shadows with warm orange fire
+      glow and cold blue night tones, graphic novel art style with clean lines
+      and high contrast.
+    createdAt: 2026-11-27T09:49:47.000Z
+    updatedAt: 2026-11-27T09:49:47.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1795772998000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

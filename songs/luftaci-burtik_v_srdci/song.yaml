@@ -4,8 +4,8 @@ versions:
   v1:
     id: luftaci-burtik_v_srdci_1781973763117
     createdAt: '2026-06-20T16:42:43.000Z'
-    updatedAt: '2026-06-24T18:38:06.000Z'
-    revision: 6
+    updatedAt: '2026-11-26T13:35:09.000Z'
+    revision: 7
     youtubeId: bv0Kc7NmfEA
 prompts:
   - id: luftaci-burtik_v_srdci_gpt-5.4-mini_v7

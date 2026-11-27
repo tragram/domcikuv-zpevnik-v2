@@ -28,9 +28,12 @@ And [C]I'm the only [G]one and I walk [Dm]alone
 {end_of_bridge}
 
 {start_of_chorus}
-[B]My [F]shadow's the [C]only one that [Dm]walks beside me
-[B]My [F]shallow [C]heart's the only [Dm]thing that's beating
-[B]Sometimes [F]I [C]wish someone out [Dm]there will find me
+[B]My [F]shadow's the [C]only one
+that [Dm]walks beside me
+[B]My [F]shallow [C]heart's
+the only [Dm]thing that's beating
+[B]Sometimes [F]I [C]wish
+someone out [Dm]there will find me
 [B]'til [F]then I [A]walk alone
 {end_of_chorus}
 

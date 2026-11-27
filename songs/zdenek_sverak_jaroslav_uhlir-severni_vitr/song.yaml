@@ -1,0 +1,36 @@
+songId: zdenek_sverak_jaroslav_uhlir-severni_vitr
+official: v2
+versions:
+  v1:
+    id: 5c1853cc-64c7-48ed-8763-d5c3977997eb
+    label: z nahrávky
+    createdAt: '2026-11-26T19:37:04.000Z'
+    updatedAt: '2026-11-26T19:37:04.000Z'
+    revision: 1
+    youtubeId: 4Tfg2X58TzA
+  v2:
+    id: 81c4a0c4-2d92-47c9-abad-bb02f7697dcd
+    label: táboráková
+    createdAt: '2026-11-26T19:38:55.000Z'
+    updatedAt: '2026-11-26T19:38:55.000Z'
+    revision: 1
+    youtubeId: 4Tfg2X58TzA
+prompts:
+  - id: zdenek_sverak_jaroslav_uhlir-severni_vitr_gpt-6.1-terra_v9
+    songId: zdenek_sverak_jaroslav_uhlir-severni_vitr
+    summaryPromptVersion: v9
+    summaryModel: gpt-6.1-terra
+    text: >-
+      A feverish, bearded gold prospector digs his own grave in a snowbound
+      northern wilderness, a rough wooden cross beside him. A battered tin mug
+      holds a few grains of gold; distant wolves watch beneath the aurora. Cold
+      blue-green polar light and a faint golden glint illuminate the scene.
+      Melancholy, stark folk-art painting with textured brushwork and a simple
+      composition. No text.
+    createdAt: 2026-11-26T19:35:44.000Z
+    updatedAt: 2026-11-26T19:35:44.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1795721803000
+        imageModel: gpt-image-2.6-flare
+        filename: gpt-image-2.6-flare.webp

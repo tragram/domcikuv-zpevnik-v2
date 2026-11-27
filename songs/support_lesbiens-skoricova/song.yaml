@@ -1,0 +1,28 @@
+songId: support_lesbiens-skoricova
+official: v1
+versions:
+  v1:
+    id: dc806b78-5987-4e3a-8a26-3b52215d7cfb
+    createdAt: '2026-11-26T20:39:19.000Z'
+    updatedAt: '2026-11-26T20:39:19.000Z'
+    revision: 1
+    youtubeId: 0N5BswC5OKM
+prompts:
+  - id: support_lesbiens-skoricova_gpt-6.1-terra_v9
+    songId: support_lesbiens-skoricova
+    summaryPromptVersion: v9
+    summaryModel: gpt-6.1-terra
+    text: >-
+      Inside a dark circus tent, a Parisian-styled circus performer and her
+      lover share a secret embrace beside a half-empty bottle of wine, while the
+      ringmaster sleeps in the shadows. Moonlight slips through the canvas,
+      illuminating their faces and hinting at the magic that will vanish by
+      morning. Romantic, intimate and bittersweet; stylized oil painting with
+      deep burgundy shadows and soft silver-blue light. No text.
+    createdAt: 2026-11-26T20:39:26.000Z
+    updatedAt: 2026-11-26T20:39:26.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1795725590000
+        imageModel: gpt-image-2.6-flare
+        filename: gpt-image-2.6-flare.webp

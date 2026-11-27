@@ -4,8 +4,8 @@ versions:
   v1:
     id: wohnout-svaz_ceskych_bohemu_1423868400000
     createdAt: '2015-02-13T23:00:00.000Z'
-    updatedAt: '2026-07-19T13:23:10.000Z'
-    revision: 2
+    updatedAt: '2026-11-26T21:43:05.000Z'
+    revision: 3
     youtubeId: EpJV6ZCo84c
 prompts:
   - id: wohnout-svaz_ceskych_bohemu_gpt-4o-mini_v1

@@ -4,8 +4,8 @@ versions:
   v1:
     id: marta_kubisova-rekni_kde_ty_kytky_jsou_1790014001224
     createdAt: '2026-09-21T18:06:41.000Z'
-    updatedAt: '2026-09-21T18:08:16.000Z'
-    revision: 3
+    updatedAt: '2026-11-26T14:09:31.000Z'
+    revision: 4
     youtubeId: 1QF57G-nEiU
 prompts:
   - id: marta_kubisova-rekni_kde_ty_kytky_jsou_gpt-5.4-mini_v7

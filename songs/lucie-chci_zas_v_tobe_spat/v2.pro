@@ -1,0 +1,87 @@
+{title: Chci zas v tobě spát}
+{artist: Lucie}
+{key: G}
+{capo: 0}
+{range: d1-g2}
+{language: czech}
+{startMelody: a a g a}
+{illustrationId: lucie-chci_zas_v_tobe_spat_gpt-4o-mini_v1_flux.1-dev}
+{promptId: lucie-chci_zas_v_tobe_spat_gpt-4o-mini_v1}
+
+{start_of_interlude: Intro}
+𝄆 [G][Gmaj7][Emi][C] 𝄇 [D]
+{end_of_interlude}
+
+{start_of_verse}
+[G]Mlčíš a svět je funny, [Hmi]záhadou,
+[Emi]stává se pro mě honey,
+když [C]dračí drápy tnou,
+
+[G]Temnice tmavá vříská, [Hmi]bleskne tmou,
+[Emi]mý vlasy loučí víská
+a [C]letí nad vodou
+{end_of_verse}
+
+{start_of_chorus: R1}
+[D]A hrubý síly vzývám,
+[C]snídám bezprá[G]ví,
+[D]tvý voči v hlavě vídám,
+[Ami]je to všechno jedna velká síla,
+
+[Emi]Jestli se vážně hodíš,
+[C]nevím nejdu spát,
+[D]na kolej kluky vodíš
+a [C]ráno se chceš brát,
+
+[Emi]Jestli se ke mně hodíš,
+[C]snad jdu k tobě spát,
+[D]s láskou se vůní brodíme,
+[C]postelový království
+
+{end_of_chorus}
+
+{start_of_chorus: R2}
+[D]Za koně nechce se mi [C]dát,
+[C]jsem na tom [D]stejně mám tě [Emi]rád,
+[C]jablkem, [D]jablkem nejsi,
+
+[Ami]Kousnu hloubš a pak zlíbám tě celou
+[C]merci, ó merci, tak opustit zoufalců [D]ráj,
+[D]chci zas v tobě [Emi]spát.
+{end_of_chorus}
+
+{start_of_interlude: Mezihra}
+[Emi][C][Ami][C][D]
+{end_of_interlude}
+
+{start_of_verse}
+[G]Říkáš, že svět je krásnej, [Hmi]svět je zlej,
+[Emi]až naše hvězda zhasne,
+[C]haudy haudy hej,
+
+[G]Štěstím se lůza brodí [Hmi]neříkám,
+[Emi]hledá, pravdu rodí,
+[C]neví, nesvlíká se [D]lásko
+{end_of_verse}
+
+{chorus: R1}
+
+{chorus: R2}
+
+{interlude: Mezihra}
+
+{start_of_bridge}
+[Emi]Sami se k břehům kloníme,
+[C]sami jak bezvládnej proud,
+[Emi]sami se proti vlnám stavíme, [C][D]
+
+[Emi]Sami se k břehům kloníme,
+[C]sami jak bezvládnej proud, jé
+[Emi]sami se proti vlnám stavíme. [C][D]
+{end_of_bridge}
+
+{start_of_variant: replace_first_line}
+[C]Jsem na tom [D]stejně mám tě [Emi]rád
+{end_of_variant}
+
+{chorus: R2}

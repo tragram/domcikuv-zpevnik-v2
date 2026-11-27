@@ -1,0 +1,30 @@
+songId: mig_21-slepic_pirka
+official: v1
+versions:
+  v1:
+    id: mig_21-slepic_pirka_1774983339351
+    createdAt: '2026-03-31T18:55:39.000Z'
+    updatedAt: '2026-11-26T21:06:51.000Z'
+    revision: 2
+    youtubeId: vYz-i7re2Zo
+prompts:
+  - id: mig_21-slepic_pirka_gemini-3.5-flash-lite_v9
+    songId: mig_21-slepic_pirka
+    summaryPromptVersion: v9
+    summaryModel: gemini-3.5-flash-lite
+    text: >-
+      Cinematic oil painting capturing a surreal, folkloric gypsy caravan night
+      scene. In the foreground, a frightened hare runs through a moonlit meadow
+      next to a dark, ominous forest. In the midground, silhouette figures with
+      heavily tattooed arms stand around a dying campfire, from which smoke
+      mixed with stolen chicken feathers rises towards a starry sky. Moody,
+      dramatic chiaroscuro lighting with deep indigo shadows and warm, fiery
+      amber glow from the embers. Rich textures, poetic and melancholic
+      atmosphere.
+    createdAt: 2026-11-27T09:49:22.000Z
+    updatedAt: 2026-11-27T09:49:22.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1795772973000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

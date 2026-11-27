@@ -2,7 +2,9 @@
 {artist: Vypsaná fixa}
 {key: C}
 {capo: 0}
+{range: e1-e2}
 {language: czech}
+{startMelody: e e e}
 {illustrationId: vypsana_fixa-antidepresivni_rybicka_gpt-5.4-mini_v7_nano-banana-2}
 {promptId: vypsana_fixa-antidepresivni_rybicka_gpt-5.4-mini_v7}
 
@@ -29,7 +31,8 @@ A ona [C]plave [G]z modřiny do modřiny
 [C]Veze si antidepre[Emi]sivní rybi[F]čku
 [C]městem, co má vel[Emi]kou spoustu pas[F]tí
 [C]falešný městský stráž[Emi]ník
-[C]bary a zlodě[Emi]ji kol
+
+[C]Bary a zlodě[Emi]ji kol
 [C]a nebo prostě kaž[Emi]dý
 [C]koho si - ty - vy[Emi]myslíš
 {end_of_verse}

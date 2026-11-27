@@ -1,12 +1,16 @@
 {title: Svařák}
 {artist: Harlej}
 {key: G}
-{capo: 0}
+{capo: -1}
 {range: e1-e2}
 {language: czech}
 {startMelody: h h §h c d}
 {illustrationId: harlej-svarak_gpt-4o-mini_v1_flux.1-dev}
 {promptId: harlej-svarak_gpt-4o-mini_v1}
+
+{start_of_interlude}
+[G][Am][C][G]
+{end_of_interlude}
 
 {start_of_verse}
 [G]Když jsem sám doma, [Ami]poslouchám Vávra,
@@ -22,6 +26,8 @@ já mám [C]rád, rád sva[G]řák.
 já mám [C]rád, rád sva[G]řák.
 {end_of_chorus}
 
+{interlude}
+
 {start_of_verse}
 [G]Se známou partou, [Ami]domluva krátká,
 [C]zejtra v 6 hodin,[D]vstup jedna lampa.
@@ -31,11 +37,19 @@ já mám [C]rád, rád sva[G]řák.
 
 {chorus}
 
+{interlude}
+
+{interlude}
+
+{interlude}
+
 {start_of_verse}
 [G]Když jsem sám doma, [Ami]poslouchám Vavra,
 [C]starýho vola, [D]pořád dokola.
 [G]Chce to mít nápad, [Ami]a né pořád chrápat,
 [C]já dostal jsem nápad [D]udělat mejdan[C].
 {end_of_verse}
+
+{chorus}
 
 {chorus}

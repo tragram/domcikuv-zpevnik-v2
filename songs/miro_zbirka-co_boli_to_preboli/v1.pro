@@ -7,10 +7,15 @@
 {promptId: miro_zbirka-co_boli_to_preboli_gpt-5.4-mini_v7}
 
 {start_of_verse}
-[Dm]Čo bolí, to [Gm]prebolí, [A7]už to skrýva [Dm]tvár,
-[Dm]dvaja blázni [Gm]na mori, [A7]niekto nám veslo [Dm]vzal.
-[B]Čln sa láme [A]napoly, [B]keď topíš sa, [A]vieš,
-[Dm]čo bolí, to [Gm]prebolí [A7]a odpláva [Dm]preč.
+[Dm]Čo bolí, to [Gm]prebolí,
+[A7]už to skrýva [Dm]tvár,
+[Dm]dvaja blázni [Gm]na mori,
+[A7]niekto nám veslo [Dm]vzal.
+
+[B]Čln sa láme [A]napoly,
+[B]keď topíš sa, [A]vieš,
+[Dm]čo bolí, to [Gm]prebolí
+[A7]a odpláva [Dm]preč.
 {end_of_verse}
 
 {start_of_chorus: R1}
@@ -19,10 +24,15 @@
 {end_of_chorus}
 
 {start_of_verse}
-[Dm]Co bolí, to [Gm]přebolí, [A7]nepředbíhej [Dm]čas,
-[Dm]co necháme v [Gm]tom moři, [A7]jednou zkrásní v [Dm]nás.
-[B]Z trosek víc člun [A]nestvoříš, [B]z moře stoupá [A]dým,
-[Dm]co bolí, to [Gm]přebolí, [A7]možná víš, co s [Dm]tím.
+[Dm]Co bolí, to [Gm]přebolí,
+[A7]nepředbíhej [Dm]čas,
+[Dm]co necháme v [Gm]tom moři,
+[A7]jednou zkrásní v [Dm]nás.
+
+[B]Z trosek víc člun [A]nestvoříš,
+[B]z moře stoupá [A]dým,
+[Dm]co bolí, to [Gm]přebolí,
+[A7]možná víš, co s [Dm]tím.
 {end_of_verse}
 
 {start_of_chorus: R2}
@@ -36,10 +46,15 @@
 {end_of_bridge}
 
 {start_of_verse}
-[Dm]Co bolí, to [Gm]přebolí, [A7]co neznáš, už [Dm]znáš,
-[Dm]přijdeš k poušti [Gm]po moři, [A7]tam čekám Tě [Dm]zas.
-[B]Nezhasínej, [A]co hoří, [B]ať hoří to [A]dál,
-[Dm]co bolí, to [Gm]přebolí, [A7]proč bys sám to [Dm]vzdal?
+[Dm]Co bolí, to [Gm]přebolí,
+[A7]co neznáš, už [Dm]znáš,
+[Dm]přijdeš k poušti [Gm]po moři,
+[A7]tam čekám Tě [Dm]zas.
+
+[B]Nezhasínej, [A]co hoří,
+[B]ať hoří to [A]dál,
+[Dm]co bolí, to [Gm]přebolí,
+[A7]proč bys sám to [Dm]vzdal?
 {end_of_verse}
 
 {start_of_chorus: R3}

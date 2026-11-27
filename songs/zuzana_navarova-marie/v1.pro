@@ -49,7 +49,8 @@ Herbatka, [H7]jedna kola, no tak se [E7]sbal.
 
 {start_of_bridge}
 Marie [Dmi]holubice, Marie [Ami]létavice,
-Marie [H7]blýskavice, krasavice, [E7]ech, Rosice - Pardubice.
+Marie [H7]blýskavice, krasavice,
+[E7]ech, Rosice - Pardubice.
 {end_of_bridge}
 
 {verse: 1}

@@ -4,8 +4,8 @@ versions:
   v1:
     id: lihova-jesterice_1773778701083
     createdAt: '2026-03-17T20:18:21.000Z'
-    updatedAt: '2026-03-29T15:00:34.000Z'
-    revision: 3
+    updatedAt: '2026-11-26T13:43:58.000Z'
+    revision: 4
 prompts:
   - id: lihova-jesterice_gpt-5-mini_v4
     songId: lihova-jesterice

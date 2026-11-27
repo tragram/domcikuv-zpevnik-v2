@@ -1,0 +1,29 @@
+songId: rybicky_48-slibuju_ze_nebudu_pit
+official: v1
+versions:
+  v1:
+    id: rybicky_48-slibuju_ze_nebudu_pit_1787857974198
+    createdAt: '2026-08-27T19:12:54.000Z'
+    updatedAt: '2026-11-26T21:21:54.000Z'
+    revision: 2
+    youtubeId: Q0TgxBjKX-A
+prompts:
+  - id: rybicky_48-slibuju_ze_nebudu_pit_gemini-3.5-flash-lite_v9
+    songId: rybicky_48-slibuju_ze_nebudu_pit
+    summaryPromptVersion: v9
+    summaryModel: gemini-3.5-flash-lite
+    text: >-
+      A hungover man sitting at a messy kitchen table at 10 AM, holding a
+      steaming mug of coffee and a lit cigarette with smoke curling upwards.
+      Across the table, a disapproving woman with her arms crossed looks at him
+      with a knowing, disappointed gaze. The setting is a dimly lit, cluttered
+      Czech apartment. Visual medium: A moody, slightly satirical 2D graphic
+      novel illustration with a muted color palette of greys, browns, and a
+      stark splash of morning sunlight hitting the table.
+    createdAt: 2026-11-27T09:49:25.000Z
+    updatedAt: 2026-11-27T09:49:25.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1795772974000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

@@ -6,9 +6,9 @@
 {illustrationId: nerez-tisic_dnu_mezi_nami_gpt-5.4-mini_v7_nano-banana-2}
 {promptId: nerez-tisic_dnu_mezi_nami_gpt-5.4-mini_v7}
 
-{start_of_verse}
+{start_of_interlude}
 𝄆 [F#m][Hm7][Dma7][Gma7] 𝄇 (3x)
-{end_of_verse}
+{end_of_interlude}
 
 {start_of_verse: 1}
 [Hm]Ocelově [Em]modrou masku [Hm9]máš

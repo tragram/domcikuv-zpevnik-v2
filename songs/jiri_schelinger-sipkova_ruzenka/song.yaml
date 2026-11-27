@@ -1,0 +1,28 @@
+songId: jiri_schelinger-sipkova_ruzenka
+official: v1
+versions:
+  v1:
+    id: jiri_schelinger-sipkova_ruzenka_1774990188686
+    createdAt: '2026-03-31T20:49:48.000Z'
+    updatedAt: '2026-11-26T21:49:40.000Z'
+    revision: 2
+    youtubeId: gpnYdXV4uxs
+prompts:
+  - id: jiri_schelinger-sipkova_ruzenka_gemini-3.5-flash-lite_v9
+    songId: jiri_schelinger-sipkova_ruzenka
+    summaryPromptVersion: v9
+    summaryModel: gemini-3.5-flash-lite
+    text: >-
+      Dark fantasy oil painting depicting a lone modern traveler in a dark
+      forest facing a massive, overgrown castle gate entangled with glowing wild
+      rose bushes. A sliver of moonlight pierces through heavy canopy fog,
+      illuminating a single pale, sleeping maiden visible through a high tower
+      window. Moody, melancholic atmosphere, deep crimson and midnight blue
+      tones, rich textures, legible at small scale.
+    createdAt: 2026-11-27T09:49:45.000Z
+    updatedAt: 2026-11-27T09:49:45.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1795772995000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

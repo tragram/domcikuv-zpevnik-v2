@@ -1,0 +1,30 @@
+songId: w._matuska-slavici_z_madridu
+official: v1
+versions:
+  v1:
+    id: w._matuska-slavici_z_madridu_1774986884653
+    createdAt: '2026-03-31T19:54:44.000Z'
+    updatedAt: '2026-11-26T20:51:09.000Z'
+    revision: 2
+    youtubeId: Ifimsaport8
+prompts:
+  - id: w._matuska-slavici_z_madridu_gemini-3.5-flash-lite_v9
+    songId: w._matuska-slavici_z_madridu
+    summaryPromptVersion: v9
+    summaryModel: gemini-3.5-flash-lite
+    text: >-
+      Cinematic photorealistic shot of a relaxed middle-aged man sitting in the
+      cool, deep shade of a lush fig tree on a sun-drenched Mediterranean
+      terrace, holding a rustic glass of red wine. In the bright background, a
+      blurred traditional Spanish village square bustles with festive crowds,
+      matadors, and women in dark mantillas under a brilliant blue and gold sky.
+      Dappled sunlight filters through the broad fig leaves onto the man's
+      serene face. The mood is lazy, hedonistic, and peaceful. Rich warm tones,
+      vibrant contrast, shallow depth of field.
+    createdAt: 2026-11-27T09:49:00.000Z
+    updatedAt: 2026-11-27T09:49:00.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1795772951000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

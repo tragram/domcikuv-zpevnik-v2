@@ -4,8 +4,8 @@ versions:
   v1:
     id: karel_kryl-karavana_mraku_1292281200000
     createdAt: '2010-12-13T23:00:00.000Z'
-    updatedAt: '2026-11-09T18:16:58.000Z'
-    revision: 2
+    updatedAt: '2026-11-26T13:57:40.000Z'
+    revision: 3
     youtubeId: K-wVTb8ukbY
 prompts:
   - id: karel_kryl-karavana_mraku_gpt-4o-mini_v1

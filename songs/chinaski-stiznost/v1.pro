@@ -1,50 +1,60 @@
 {title: Stížnost}
 {artist: Chinaski}
-{key: C}
-{capo: 0}
-{range: a1-d2}
+{key: D}
+{capo: 3}
+{range: h1-e2}
 {language: czech}
-{startMelody: g}
+{startMelody: a}
 {illustrationId: chinaski-stiznost_gpt-4o-mini_v1_flux.1-dev}
 {promptId: chinaski-stiznost_gpt-4o-mini_v1}
 
 {start_of_chorus: R1}
-[C]Dva večery sepisuju
-[G]dlouhou stížnost [Dmi]na život
-chci [F]zrušit svoji existenci
-[C]bylo toho víc než [G]dost [F]
+[D]Dva večery sepisuju
+[A]dlouhou stížnost [Em]na život
+chci [G]zrušit svoji existenci
+[D]bylo toho víc než [A]dost [Em]
 {end_of_chorus}
 
+{start_of_interlude}
+[D][A][Em]
+[G][D][A][Em]
+{end_of_interlude}
+
 {start_of_verse}
-[C]Zalepím jim do [G]obálky
-a [Dmi]nad příslušnou adresu
-nale[F]pim hned čtyry [C]známky
-s tím [G]chlapem co ho nesnesu[F]
-[C]Prohledávám doklady
-a [G]chci v nich najít rodnej [Dmi]list
-[F]všechny stopy, data, [C]důkazy
-toužím [G]zničit, jsem si [F]jist
+[D]Zalepím jim do [A]obálky
+a [Em]nad příslušnou adresu
+nale[G]pim hned čtyry [D]známky
+s tím [A]chlapem co ho nesnesu[Em]
+{end_of_verse}
+
+{start_of_verse}
+[D]Prohledávám doklady
+a [A]chci v nich najít rodnej [Em]list
+[G]všechny stopy, data, [D]důkazy
+toužím [A]zničit, jsem si [Em]jist
 {end_of_verse}
 
 {chorus: R1}
 
 {start_of_chorus: R2}
-[C]Do deseti let čekám
-[G]odpověď úřední [Dmi]oznámení
-[F]že pro takový [C]jako já
-[G]tenhleten svět není[F]
+[D]Do deseti let čekám
+[A]odpověď úřední [Em]oznámení
+[G]že pro takový [D]jako já
+[A]tenhleten svět není[Em]
 {end_of_chorus}
 
 {start_of_verse}
-[C]Půjdu někam na [G]matriku
-a [Dmi]rodnej list tam odevzdám
-[F]chci vymazat svou [C]evidenci
-a [G]vobčanku jim taky [F]dám
+[D]Půjdu někam na [A]matriku
+a [Em]rodnej list tam odevzdám
+[G]chci vymazat svou [D]evidenci
+a [A]vobčanku jim taky [Em]dám
+{end_of_verse}
 
-[C]Přidám taky [G]řidičák,
-[Dmi]dřív než vyhraju nějaký body
-[F]kašlu na ty vaše [C]závody,
-kde se [G]hraje o ná[F]hody
+{start_of_verse}
+[D]Přidám taky [A]řidičák,
+[Em]dřív než vyhraju nějaký body
+[G]kašlu na ty vaše [D]závody,
+kde se [A]hraje o ná[Em]hody
 {end_of_verse}
 
 {chorus: R1}
@@ -52,12 +62,18 @@ kde se [G]hraje o ná[F]hody
 {chorus: R2}
 
 {start_of_chorus: R3}
-[C]Já si podám [G]žalobu
-a [Dmi]razítkem ji opatřím
-Snad [F]dřív než půjdu [C]do hrobu
-soud [G]uzná, že sem [F]nepatřím
+[D]Já si podám [A]žalobu
+a [Em]razítkem ji opatřím
+Snad [G]dřív než půjdu [D]do hrobu
+soud [A]uzná, že sem [D]nepatřím
 {end_of_chorus}
+
+{start_of_interlude}
+[A][Em][G][D][A][Em]
+{end_of_interlude}
 
 {chorus: R1}
 
 {chorus: R2}
+
+{chorus: R1}

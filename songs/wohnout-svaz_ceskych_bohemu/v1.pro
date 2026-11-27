@@ -7,6 +7,10 @@
 {illustrationId: wohnout-svaz_ceskych_bohemu_gpt-4o_v1_dalle3}
 {promptId: wohnout-svaz_ceskych_bohemu_gpt-4o_v1}
 
+{start_of_interlude}
+𝄆 [G][Dm][Am][F][C] 𝄇
+{end_of_interlude}
+
 {start_of_chorus}
 [G]Vracím se domů nad [Dmi]ránem,
 kvalitním vínem omá[Ami]men,
@@ -19,12 +23,16 @@ pro všechny jasný poselst[F]ví
 Tomu se [C]říká přátelst[G]ví.
 {end_of_chorus}
 
+{interlude}
+
 {start_of_verse}
 [G]Wow, mám tisíc otá[Dmi]zek,
 na žádnou vzpomín[Ami]ku,
 skládám si obrá[F]zek,
 [C]kámen po kamín[G]ku.
+{end_of_verse}
 
+{start_of_verse}
 [G]Včerejší produk[Dmi]ce,
 šla do bezvědo[Ami]mí,
 nastává deduk[F]ce,
@@ -36,7 +44,9 @@ co [C]na to svědo[G]mí.
 já byl jsem na sra[Ami]zu,
 s kumpány který [F]mám,
 [C]patříme do [G]svazu,
+{end_of_verse}
 
+{start_of_verse}
 [G]Vlastníme domé[Dmi]nu,
 tak si nás rozklik[Ami]ni,
 svaz českejch bohé[F]mů
@@ -44,12 +54,16 @@ svaz českejch bohé[F]mů
 
 {chorus}
 
+{interlude}
+
 {start_of_verse}
 [G]Ou, stačí pár večír[Dmi]ků,
 společně s [Ami]bohémy,
 za kterými se [F]táhnou
 od [C]školy problé[G]my.
+{end_of_verse}
 
+{start_of_verse}
 [G]V partě je Blek[Dmi]ota,
 Jekota, Mek[Ami]ota,
 dost často [F]hovoříme
@@ -61,13 +75,19 @@ Jako je třeba [Dmi]teď,
 mám tisíc otáz[Ami]ek,
 na žádnou vzpomí[F]nku,
 si [C]skládám obrá[G]zek.
+{end_of_verse}
 
+{start_of_verse}
 [G]Z těžkejch ran líž[Dmi]u se,
 včera jsme [Ami]slavili,
 svatýho Vyšu[F]se.
 {end_of_verse}
 
 {chorus}
+
+{start_of_interlude}
+[G][G][G][G]
+{end_of_interlude}
 
 {start_of_bridge}
 [G]Svět zrychluje svý otáčky,
@@ -90,3 +110,9 @@ svatýho Vyšu[F]se.
 [Ami]Na to nelze říci než
 [F]"Jinak to nebu[C]de."
 {end_of_chorus}
+
+{chorus}
+
+{chorus}
+
+{chorus}

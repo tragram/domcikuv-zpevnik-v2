@@ -4,8 +4,8 @@ versions:
   v1:
     id: zuzana_navarova-marie_1785180287047
     createdAt: '2026-07-27T19:24:47.000Z'
-    updatedAt: '2026-07-27T19:42:54.000Z'
-    revision: 4
+    updatedAt: '2026-11-26T14:22:26.000Z'
+    revision: 5
     youtubeId: MFNf6bMNXQU
 prompts:
   - id: zuzana_navarova-marie_gpt-5.4-mini_v7

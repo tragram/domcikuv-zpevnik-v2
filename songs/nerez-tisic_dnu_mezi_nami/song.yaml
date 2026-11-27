@@ -4,8 +4,8 @@ versions:
   v1:
     id: nerez-tisic_dnu_mezi_nami_1792922758187
     createdAt: '2026-10-25T10:05:58.000Z'
-    updatedAt: '2026-11-26T09:34:54.000Z'
-    revision: 5
+    updatedAt: '2026-11-26T13:54:13.000Z'
+    revision: 6
     youtubeId: GbDSt9fp0Xg
 prompts:
   - id: nerez-tisic_dnu_mezi_nami_gpt-5.4-mini_v7

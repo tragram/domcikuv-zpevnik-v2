@@ -31,10 +31,14 @@ a pak ty kecy hustí do dětí.
 {end_of_verse}
 
 {start_of_chorus}
-[G]Za co Pane Bože, za co? Trestáš tento pro[D]stý lid.
-Za co Pane Bože, za co? Nechals nás se napá[G]lit.
-Za co Pane Bože, za co? Zas štyry roky v prde[D]li.
-Za co Pane Bože, za co? Omluv mě, že jsem tak [G]smělý
+[G]Za co Pane Bože, za co?
+Trestáš tento pro[D]stý lid.
+Za co Pane Bože, za co?
+Nechals nás se napá[G]lit.
+Za co Pane Bože, za co?
+Zas štyry roky v prde[D]li.
+Za co Pane Bože, za co?
+Omluv mě, že jsem tak [G]smělý
 {end_of_chorus}
 
 {start_of_verse}
@@ -60,10 +64,14 @@ nechť vzkvétá naše zemička.
 {end_of_verse}
 
 {start_of_chorus}
-[A]Za co Pane Bože, za co? Trestáš tento prostý [E]lid.
-Za co Pane Bože, za co? Nechals nás se napá[A]lit.
-Za co Pane Bože, za co? Zas štyry roky v prde[E]li.
-Za co Pane Bože, za co? Chceš, abychom trpěl[A]i.
+[A]Za co Pane Bože, za co?
+Trestáš tento prostý [E]lid.
+Za co Pane Bože, za co?
+Nechals nás se napá[A]lit.
+Za co Pane Bože, za co?
+Zas štyry roky v prde[E]li.
+Za co Pane Bože, za co?
+Chceš, abychom trpěl[A]i.
 {end_of_chorus}
 
 {start_of_verse}
@@ -89,8 +97,12 @@ z úcty k tradici ruka v ruku myje
 {end_of_verse}
 
 {start_of_chorus}
-[B]Za co Pane Bože, za co? Trestáš tento prostý [F]lid.
-Za co Pane Bože, za co? Nechals nás se napá[B]lit.
-Za co Pane Bože, za co? Zas štyry roky v prd[F]eli.
-Za co Pane Bože, za co? Tak snad mě někdo vods[B]třelí.
+[B]Za co Pane Bože, za co?
+Trestáš tento prostý [F]lid.
+Za co Pane Bože, za co?
+Nechals nás se napá[B]lit.
+Za co Pane Bože, za co?
+Zas štyry roky v prd[F]eli.
+Za co Pane Bože, za co?
+Tak snad mě někdo vods[B]třelí.
 {end_of_chorus}

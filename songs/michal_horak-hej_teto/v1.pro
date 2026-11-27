@@ -10,39 +10,57 @@
 
 {start_of_verse}
 Měl jsem [Em]hlídat tetě [G]křečka,
-[D]dala mi ho se slovy, ať [A]u mě chvíli přečká.
+[D]dala mi ho se slovy,
+ať [A]u mě chvíli přečká.
+
 Ale [Em]křečka, uhlí[G]dati
-[D]nelze jen tak lehce, obzvlášť [A]když se vám moc nechce.
+[D]nelze jen tak lehce,
+obzvlášť [A]když se vám moc nechce.
 {end_of_verse}
 
 {start_of_verse}
 Po po[Em]koji ať si [G]běhá,
-[D]na gauč jsem si lehnul, vzápě[A]tí se ani nehnul.
+[D]na gauč jsem si lehnul,
+vzápě[A]tí se ani nehnul.
+
 Tlači[Em]lo mě do zad [G]kromě
-[D]polštářů i cosi, už se [A]vidim tetu prosit:
+[D]polštářů i cosi,
+už se [A]vidim tetu prosit:
 {end_of_verse}
 
 {start_of_chorus}
 Hej [C]teto! Já [G]ho zabil.
-[H7]Už se to nestane, jo, [Em]ten už asi nevstane.
+[H7]Už se to nestane, jo,
+[Em]ten už asi nevstane.
+
 Hej [C]teto! Nekřič [G]na mě.
-[H7]Já ho prostě neviděl, už [Em]dost jsem se nastyděl.
+[H7]Já ho prostě neviděl,
+už [Em]dost jsem se nastyděl.
 Hej [C]teto!
-[G][H7][Em][C][G][H7]
 {end_of_chorus}
+
+{start_of_interlude}
+[G][H7][Em][C][G][H7]
+{end_of_interlude}
 
 {start_of_verse}
 Tak jsem [Em]kouknul, co mě [G]tlačí,
-[D]seděl jsem jenom na tele[A]vizním ovladači.
+[D]seděl jsem jenom
+na tele[A]vizním ovladači.
+
 Ale [Em]křeččí švito[G]ření
-slyšet [D]není, jenom zvláštní smrad se [A]line od topení.
+slyšet [D]není, jenom
+zvláštní smrad se [A]line od topení.
 {end_of_verse}
 
 {start_of_verse}
 Zase [Em]se mi dech za[G]tajil,
-[D]spečeného křečka bych před [A]tetou neobhájil.
+[D]spečeného křečka bych
+před [A]tetou neobhájil.
+
 A [Em]dřív než tam sebou [G]seknu,
-[D]měl bych asi vymyslet, jak [A]tetě potom řeknu.
+[D]měl bych asi vymyslet,
+jak [A]tetě potom řeknu.
 {end_of_verse}
 
 {chorus}

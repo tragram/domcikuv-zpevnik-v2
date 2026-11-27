@@ -4,8 +4,8 @@ versions:
   v1:
     id: miro_zbirka-co_boli_to_preboli_1783767945779
     createdAt: '2026-07-11T11:05:45.000Z'
-    updatedAt: '2026-07-12T13:47:13.000Z'
-    revision: 3
+    updatedAt: '2026-11-26T13:42:40.000Z'
+    revision: 4
     youtubeId: GeKX9URmjDU
 prompts:
   - id: miro_zbirka-co_boli_to_preboli_gpt-5.4-mini_v7

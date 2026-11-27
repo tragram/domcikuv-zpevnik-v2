@@ -1,43 +1,48 @@
 {title: Síla starejch vín}
 {artist: Škwor}
-{key: C#m}
+{key: Fm}
 {capo: 0}
-{range: d#1-e2}
+{range: g1-g#2}
 {language: czech}
-{startMelody: g# g#}
+{startMelody: c c}
 {illustrationId: skwor-sila_starejch_vin_gpt-4o-mini_v2_flux.1-dev}
 {promptId: skwor-sila_starejch_vin_gpt-4o-mini_v2}
 
+{start_of_interlude}
+[Ab][Eb][Fm][Db][Fm][C#][Fm][Eb][Ab]
+{end_of_interlude}
+
 {start_of_verse}
-[C#m]Podle nepsanejch [A]zákonů,
-hledáme [H]něco, co nám nejspíš schází.
-[C#m]Podle prastarejch [A]pudů,
-který nás [H]nutěj, furt za něčím jít.
-[C#m]Do stejný řeky nikdy [A]nevstoupíš,
-klacky [H]sám sobě pod nohy házíš.
-[C#m]Cos chtěl máš, stejně [A]dojdeš k pozná[H]ní.
+[Fm]Podle nepsanejch [Db]zákonů,
+hledáme [Eb]něco, co nám nejspíš schází.
+[Fm]Podle prastarejch [Db]pudů,
+který nás [Eb]nutěj, furt za něčím jít.
+[Fm]Do stejný řeky nikdy [Db]nevstoupíš,
+klacky [Eb]sám sobě pod nohy házíš.
+[Fm]Cos chtěl máš, stejně [Db]dojdeš k pozná[Eb]ní.
 {end_of_verse}
 
 {start_of_chorus}
-Že věci [E]některý, jsou [H]neměnný,
-jak [C#m]síla starejch [A]vín.
-A někdy je [C#m]tma, kolem [A]nás
-to když [C#m]zrovna nejsme [H]stálí.
+Že věci [Ab]některý, jsou [Eb]neměnný,
+jak [Fm]síla starejch [Db]vín.
+A někdy je [Fm]tma, kolem [Db]nás
+to když [Fm]zrovna nejsme [Eb]stálí.
 
-Najednou [E]blízký jsou si [H]vzdálený
-to z [C#m]očí kouká [A]nám.
-Tak na chvílí [C#m]stůj, vzpomí[A]nej,
-no a [C#m]přiznej, taky jsme se [H]báli, co bude [E]dál.
+Najednou [Ab]blízký jsou si [Eb]vzdálený
+to z [Fm]očí kouká [Db]nám.
+Tak na chvílí [Fm]stůj, vzpomí[Db]nej,
+no a [Fm]přiznej, taky jsme se [Eb]báli,
+co bude [Ab]dál.
 {end_of_chorus}
 
 {start_of_verse}
-[C#m]Každej ctí asi [A]jinej zákon
-a kdo [H]ví, co nám odvahu dává.
-[C#m]Každej má asi [A]jinej kód
-a ty [H]sám zřejmě všechno víš líp.
-[C#m]Jak když přesadíš [A]starej strom,
-taky to [H]nebude velká sláva.
-[C#m]Cos chtěl máš, stejně [A]dojdeš k pozná[H]ní.
+[Fm]Každej ctí asi [Db]jinej zákon
+a kdo [Eb]ví, co nám odvahu dává.
+[Fm]Každej má asi [Db]jinej kód
+a ty [Eb]sám zřejmě všechno víš líp.
+[Fm]Jak když přesadíš [Db]starej strom,
+taky to [Eb]nebude velká sláva.
+[Fm]Cos chtěl máš, stejně [Db]dojdeš k pozná[Eb]ní.
 {end_of_verse}
 
 {chorus}

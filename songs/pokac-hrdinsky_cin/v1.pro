@@ -37,7 +37,8 @@ pak [Dm]povídám [C]hele já [G]nerozu[E]mim
 {end_of_verse}
 
 {start_of_chorus}
-[Dm]Laj-lalala [G]laj-lalala [E]laj-lalala [Am]laj-laj-laj (3x)
+𝄆 [Dm]Laj-lalala [G]laj-lalala
+[E]laj-lalala [Am]laj-laj-laj 𝄇 (3x)
 [Dm]laj-laj-laj [E]laj-laj-laj la-[Am]laj
 {end_of_chorus}
 

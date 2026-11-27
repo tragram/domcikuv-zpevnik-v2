@@ -1,0 +1,31 @@
+songId: pisnicky_z_pohadek-statistika
+official: v1
+versions:
+  v1:
+    id: pisnicky_z_pohadek-statistika_1787862791922
+    createdAt: '2026-08-27T20:33:11.000Z'
+    updatedAt: '2026-11-26T21:26:39.000Z'
+    revision: 2
+    youtubeId: Jiz0HPgGbfM
+prompts:
+  - id: pisnicky_z_pohadek-statistika_gemini-3.5-flash-lite_v9
+    songId: pisnicky_z_pohadek-statistika
+    summaryPromptVersion: v9
+    summaryModel: gemini-3.5-flash-lite
+    text: >-
+      A whimsical fairy-tale illustration in a charming paper-cutout collage
+      style. In a dense green forest, a brave young peasant boy with a wooden
+      sword, reminiscent of traditional Czech animation, hides behind thick
+      bushes. He is peering out at a clumsy, multi-headed dragon sneezing green
+      sulfur smoke from its nose. Giant, glowing statistical charts and numbers
+      float subtly in the air around the dragon like constellations, humorously
+      predicting the outcome. Bright morning sunlight breaks through the canopy,
+      creating an optimistic, cheerful mood with vibrant greens, reds, and sunny
+      yellows. Simple, clean composition legible at small sizes.
+    createdAt: 2026-11-27T09:49:28.000Z
+    updatedAt: 2026-11-27T09:49:28.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1795772977000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

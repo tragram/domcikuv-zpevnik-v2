@@ -4,8 +4,8 @@ versions:
   v1:
     id: michal_horak-hej_teto_1773416356800
     createdAt: '2026-03-13T15:39:16.000Z'
-    updatedAt: '2026-03-14T14:35:42.000Z'
-    revision: 4
+    updatedAt: '2026-11-26T14:04:49.000Z'
+    revision: 5
     youtubeId: cAQgH_gjY7E
 prompts:
   - id: michal_horak-hej_teto_gpt-5-mini_v2

@@ -1,10 +1,17 @@
 songId: lucie-chci_zas_v_tobe_spat
-official: v1
+official: v2
 versions:
   v1:
     id: lucie-chci_zas_v_tobe_spat_1436824800000
     createdAt: '2015-07-13T22:00:00.000Z'
-    updatedAt: '2026-07-11T20:48:12.000Z'
+    updatedAt: '2026-11-26T14:33:03.000Z'
+    revision: 3
+    youtubeId: 08DlOhdKvwY
+  v2:
+    id: 737ba0df-f266-4903-af56-8be7abdb8c05
+    label: Podle not HITBOX
+    createdAt: '2026-11-26T14:27:41.000Z'
+    updatedAt: '2026-11-26T14:32:22.000Z'
     revision: 2
     youtubeId: 08DlOhdKvwY
 prompts:

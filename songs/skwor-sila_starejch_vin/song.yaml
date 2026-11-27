@@ -4,8 +4,8 @@ versions:
   v1:
     id: skwor-sila_starejch_vin_1763914757000
     createdAt: '2025-11-23T16:19:17.000Z'
-    updatedAt: '2026-03-16T18:38:40.000Z'
-    revision: 2
+    updatedAt: '2026-11-26T19:51:39.000Z'
+    revision: 3
     youtubeId: WybFA3lZCSA
 prompts:
   - id: skwor-sila_starejch_vin_gpt-4o-mini_v2
