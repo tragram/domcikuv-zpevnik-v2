@@ -6,6 +6,7 @@ export const SONG_SOURCES = [
   "pisnicky-akordy",
   "zpevnik-skorepova",
   "cifraclub",
+  "akordy-kytary"
 ] as const;
 
 export type SongSourceId = (typeof SONG_SOURCES)[number];
@@ -14,4 +15,5 @@ export const SONG_SOURCES_PRETTY: Record<SongSourceId, string> = {
   "pisnicky-akordy": "Písničky-Akordy",
   "zpevnik-skorepova": "Zpěvník Skořepová",
   cifraclub: "CifraClub",
+  "akordy-kytary":"Akordy.Kytary"
 };

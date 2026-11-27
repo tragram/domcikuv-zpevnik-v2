@@ -238,6 +238,8 @@ export class SongData {
         return generateFallbackLogo("#ffb940", "#ff7800");
       case "zpevnik-skorepova":
         return generateFallbackLogo("#9917DA", "#3B0A54");
+      case "akordy-kytary":
+        return generateFallbackLogo("#B51614", "#E0E0E0");
       default:
         return undefined;
     }

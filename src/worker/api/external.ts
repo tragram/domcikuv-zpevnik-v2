@@ -1,7 +1,9 @@
 import { ChordProParser } from "chordsheetjs";
 import { convertToChordPro } from "src/lib/chords2chordpro";
-import { songBaseId } from "src/lib/song-ids";
+import type { EditorSubmitSchema } from "src/lib/contracts/editor-schema";
 import { externalSearchResultSchema } from "src/lib/contracts/external-search-schema";
+import { songBaseId } from "src/lib/song-ids";
+import { guessLanguage } from "src/lib/utils";
 import { searchAllExternalServices } from "../helpers/external-search";
 import {
   SkorepovaCache,
@@ -15,7 +17,6 @@ import {
   getDeletedSongIds,
   retrieveSingleSong,
 } from "../helpers/song-helpers";
-import type { EditorSubmitSchema } from "src/lib/contracts/editor-schema";
 import {
   errorJSend,
   failJSend,
@@ -23,7 +24,7 @@ import {
   zValidatorJSend,
 } from "./responses";
 import { buildApp } from "./utils";
-import { guessLanguage } from "src/lib/utils";
+import { attachKytaryParser } from "../helpers/external-search/akordy-kytary";
 
 export const externalRoutes = buildApp()
   .get("/search", async (c) => {
@@ -61,6 +62,8 @@ export const externalRoutes = buildApp()
       if (!response.ok) return errorJSend(c, "Source fetch failed", 502);
 
       let unparsedLyrics = "";
+      // Set by sources whose scraper already produces ChordPro
+      let finishChordPro = null as (() => string) | null;
       const rewriter = new HTMLRewriter();
 
       if (sourceId === "zpevnik-skorepova") {
@@ -93,21 +96,27 @@ export const externalRoutes = buildApp()
             unparsedLyrics += text.text;
           },
         });
+      } else if (sourceId === "akordy-kytary") {
+        finishChordPro = attachKytaryParser(rewriter);
       } else {
         return failJSend(c, "Unsupported external source", 400);
       }
 
       await rewriter.transform(response).text();
 
+      if (finishChordPro) unparsedLyrics = finishChordPro();
+
       if (!unparsedLyrics) {
         return failJSend(c, "Error scraping song lyrics", 500, "IMPORT_ERROR");
       }
 
-      const chordPro = convertToChordPro(
-        unparsedLyrics,
-        // non-czech sources need to have chords converted
-        ["cifraclub"].includes(sourceId),
-      );
+      const chordPro = finishChordPro
+        ? unparsedLyrics // already ChordPro
+        : convertToChordPro(
+            unparsedLyrics,
+            // non-czech sources need to have chords converted
+            ["cifraclub"].includes(sourceId),
+          );
       const importedSong = await createImportSong(
         db,
         title,
@@ -124,9 +133,7 @@ export const externalRoutes = buildApp()
         artist,
         language: guessLanguage(chordPro) ?? null,
         chordpro: chordPro,
-        key:
-          new ChordProParser().parse(chordPro).metadata?.key ??
-          null,
+        key: new ChordProParser().parse(chordPro).metadata?.key ?? null,
         capo: capoMatch ? parseInt(capoMatch[1]) : null,
         range: null,
         startMelody: null,
@@ -134,12 +141,23 @@ export const externalRoutes = buildApp()
         youtubeId: null,
       };
 
-      const { newVersion: importedVersion } = await createSong(db, submission, user.id, importedSong.id);
+      const { newVersion: importedVersion } = await createSong(
+        db,
+        submission,
+        user.id,
+        importedSong.id,
+      );
       // Imports follow the same review policy. Resolve and pin the actual
       // imported sheet even when it is pending or a non-official alternative.
-      const existingSong = await retrieveSingleSong(db, newSongId, importedVersion.id);
+      const existingSong = await retrieveSingleSong(
+        db,
+        newSongId,
+        importedVersion.id,
+      );
       if (!existingSong) throw Error("Failed to create song!");
-      await setSongbookEntry(db, user.id, existingSong.id, { pinnedVersionId: importedVersion.id });
+      await setSongbookEntry(db, user.id, existingSong.id, {
+        pinnedVersionId: importedVersion.id,
+      });
 
       if (thumbnailURL) {
         try {
