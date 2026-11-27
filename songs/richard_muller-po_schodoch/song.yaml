@@ -1,0 +1,29 @@
+songId: richard_muller-po_schodoch
+official: v1
+versions:
+  v1:
+    id: 5cb94cbf-60c9-45d6-9e6e-7272b1d4be5a
+    createdAt: '2026-11-20T11:37:10.000Z'
+    updatedAt: '2026-11-25T17:14:13.000Z'
+    revision: 2
+    youtubeId: ZmPAcd5dLBI
+prompts:
+  - id: richard_muller-po_schodoch_gpt-6.1-terra_v8
+    songId: richard_muller-po_schodoch
+    summaryPromptVersion: v8
+    summaryModel: gpt-6.1-terra
+    text: >-
+      A weary but amused tenant climbs the stairs of a 1980s Eastern European
+      concrete apartment block, passing a dark, broken elevator. Through three
+      partly open doors come glimpses of a barking collie, a rattling washing
+      machine and a neighbor singing opera; playful sound-wave lines spill into
+      the stairwell. Flickering fluorescent light contrasts with warm apartment
+      light. Retro editorial illustration, subtly humorous, bold shapes and a
+      limited palette. No text.
+    createdAt: 2026-11-25T19:47:01.000Z
+    updatedAt: 2026-11-25T19:47:01.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1795636062000
+        imageModel: gpt-image-2.6-flare
+        filename: gpt-image-2.6-flare.webp

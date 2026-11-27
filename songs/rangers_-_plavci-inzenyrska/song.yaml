@@ -4,8 +4,8 @@ versions:
   v1:
     id: rangers_-_plavci-inzenyrska_1749852000000
     createdAt: '2025-06-13T22:00:00.000Z'
-    updatedAt: '2026-02-08T17:37:09.000Z'
-    revision: 1
+    updatedAt: '2026-11-26T09:37:05.000Z'
+    revision: 2
     youtubeId: A2OnJm1koys
 prompts:
   - id: rangers_-_plavci-inzenyrska_gpt-4o-mini_v2

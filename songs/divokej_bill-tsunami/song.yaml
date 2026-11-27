@@ -1,0 +1,28 @@
+songId: divokej_bill-tsunami
+official: v1
+versions:
+  v1:
+    id: 588c9b96-fc33-4eaa-bc30-59319892deb6
+    createdAt: '2026-11-20T11:00:32.000Z'
+    updatedAt: '2026-11-25T15:12:28.000Z'
+    revision: 3
+    youtubeId: RaN9I4L4q-k
+prompts:
+  - id: divokej_bill-tsunami_gpt-6.1-terra_v8
+    songId: divokej_bill-tsunami
+    summaryPromptVersion: v8
+    summaryModel: gpt-6.1-terra
+    text: >-
+      A cinematic, painterly illustration of one exhausted man carrying his
+      brother on his shoulders across a scorched landscape, both determined to
+      keep moving. Behind them, a towering wave of dust and ash races through
+      the air; on the horizon, the temple spires and riverside ghats of Varanasi
+      burn. Harsh sunlight cuts through the smoky sky, casting long shadows. A
+      simple, powerful composition about brotherhood and resilience. No text.
+    createdAt: 2026-11-25T19:46:56.000Z
+    updatedAt: 2026-11-25T19:46:56.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1795636069000
+        imageModel: gpt-image-2.6-flare
+        filename: gpt-image-2.6-flare.webp

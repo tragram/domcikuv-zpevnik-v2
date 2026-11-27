@@ -27,3 +27,22 @@ prompts:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev
         filename: FLUX.1-dev.webp
+  - id: kabat-v_pekle_sudy_valej_gpt-6.1-terra_v9
+    songId: kabat-v_pekle_sudy_valej
+    summaryPromptVersion: v9
+    summaryModel: gpt-6.1-terra
+    text: >-
+      A runaway steam train hurtles through hell, its clogged chimney belching
+      thick smoke. Leaning from the locomotive, an old devil in a driver’s cap
+      cheerfully offers a steaming bowl of goulash while startled passengers
+      crowd the windows. Rolling barrels and a fiery cauldron flash past beside
+      the tracks. Wild, darkly comic Czech rock energy, illustrated as a bold
+      vintage woodcut poster, with flickering orange firelight against smoky
+      black shadows. No text.
+    createdAt: 2026-11-26T12:58:58.000Z
+    updatedAt: 2026-11-26T12:58:58.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1795697965000
+        imageModel: gpt-image-2.6-flare
+        filename: gpt-image-2.6-flare.webp

@@ -1,0 +1,30 @@
+songId: jelen-svetlo_ve_tme
+official: v1
+versions:
+  v1:
+    id: b85602e0-982a-4fd0-93bf-8eae1ab00cdf
+    createdAt: '2026-11-25T17:36:59.000Z'
+    updatedAt: '2026-11-25T17:36:59.000Z'
+    revision: 1
+    youtubeId: WjvndHl2DUQ
+prompts:
+  - id: jelen-svetlo_ve_tme_gpt-5.4-mini_v7
+    songId: jelen-svetlo_ve_tme
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic scene at twilight on a deserted French seaside
+      cliff, a young couple standing close together near a small cottage
+      overlooking the dark sea, one gently holding the other’s hand as they face
+      the horizon; the mood is intimate, rebellious, and protective, with a
+      sense of escape and hiding from the world. Soft blue-hour lighting, faint
+      moonlight, wind in their clothes, distant waves, subtle silhouettes of
+      wolves in the far mist or suggested only by atmosphere, minimal
+      composition, no text, emotionally charged, small-scale legible.
+    createdAt: 2026-11-25T17:37:03.000Z
+    updatedAt: 2026-11-25T17:37:03.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1795628233000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

@@ -4,8 +4,8 @@
 {capo: 0}
 {range: a1-c2}
 {language: czech}
-{illustrationId: honza_jicha-marinka_gpt-4o-mini_v1_flux.1-dev}
-{promptId: honza_jicha-marinka_gpt-4o-mini_v1}
+{illustrationId: honza_jicha-marinka_gpt-6.1-terra_v9_gpt-image-2.6-flare}
+{promptId: honza_jicha-marinka_gpt-6.1-terra_v9}
 
 {start_of_verse}
 [Ami]Začal jsem [D]před pár dny

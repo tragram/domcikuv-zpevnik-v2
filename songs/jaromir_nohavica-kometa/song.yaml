@@ -4,8 +4,8 @@ versions:
   v1:
     id: jaromir_nohavica-kometa_1436824800000
     createdAt: '2015-07-13T22:00:00.000Z'
-    updatedAt: '2026-08-01T08:53:13.000Z'
-    revision: 2
+    updatedAt: '2026-11-26T09:38:33.000Z'
+    revision: 3
     youtubeId: dQrC0mSRNUk
 prompts:
   - id: jaromir_nohavica-kometa_gpt-4o-mini_v1

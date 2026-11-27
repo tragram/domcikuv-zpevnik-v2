@@ -21,8 +21,7 @@
 Světlo a [F#m7]tma tak [C#m7]to [Cm7]jsem [Hm7]já
 zhasni a [F#m7]dělej, co se dělat [C#m7]může[Hm7]
 světlo a [F#m7]tma tak [C#m7]to [Cm7]jsem [Hm7]já
-jestli chceš [F#m]nezůstane na mně ani [C#m7]ků[Hm7]že
-jestli chceš [F#m]nezůstane na mně ani [C#m7]ků[Hm7]že
+𝄆 jestli chceš [F#m]nezůstane na mně ani [C#m7]ků[Hm7]že 𝄇
 jestli chceš [F#m]nezůstane na mně ani [Dma7]ků[Gma7]že
 {end_of_chorus}
 
@@ -53,8 +52,7 @@ v hlavě [G]mám z tebe [A]galimaty[Hm]áš[G][A][Hm]
 [Hm]Tisíc[G]krát pře[A]šíva[Hm]ný
 knoflí[G]ček u [A]krku [Hm]máš
 a tvůj [G]smích zvoní stejně [A]jako [Hm]hrany
-v hlavě [G]mám z tebe [A]galimaty[Hm]áš
-v hlavě [G]mám z tebe [A]galimaty[Hm]áš
+𝄆 v hlavě [G]mám z tebe [A]galimaty[Hm]áš 𝄇
 v hlavě [G]mám z tebe [A]galimaty[Gma7]áš
 {end_of_bridge}
 
@@ -69,6 +67,7 @@ v hlavě [G]mám z tebe [A]galimaty[Gma7]áš
 ([Hm]Tisíc[G]krát pře[A]šíva[Hm]ný)
 jako [G]nekonečno [A]nevypa[Hm]dá
 (knoflí[G]ček u [A]krku [Hm]máš)
+
 [Hm]Ti[G]síc [A]dnů mezi [Hm]námi
 (a tvůj [G]smích zvoní stejně [A]jako [Hm]hrany)
 v hlavě [G]mám z tebe [A]galimaty[Hm]áš

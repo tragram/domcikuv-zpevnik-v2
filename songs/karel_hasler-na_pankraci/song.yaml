@@ -25,3 +25,20 @@ prompts:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev
         filename: FLUX.1-dev.webp
+  - id: karel_hasler-na_pankraci_gpt-6.1-terra_v9
+    songId: karel_hasler-na_pankraci
+    summaryPromptVersion: v9
+    summaryModel: gpt-6.1-terra
+    text: >-
+      A melancholy Czech folk-art illustration: on a small tree-lined hill in
+      Pankrác, a young man in traditional dress watches his sweetheart Andulka
+      walking away with another suitor. Distant Prague rooftops peek through the
+      trees. Muted earthy colors, soft golden evening light, and hand-painted
+      gouache with delicate woodcut textures. Simple composition, no text.
+    createdAt: 2026-11-26T13:00:11.000Z
+    updatedAt: 2026-11-26T13:00:11.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1795698063000
+        imageModel: gpt-image-2.6-flare
+        filename: gpt-image-2.6-flare.webp

@@ -34,8 +34,10 @@ v meste, [B]lásky, kde ste, [C]neviem byť [F]sám.
 {chorus}
 
 {start_of_bridge}
-[Dm]Sklá výkladov [B]zrkadlia tvár, [Gm]sen sa túla [B]po uli[C]ciach,
-[Dm]ja hľadám pár, [B]ty dotyk rúk, [Gm]človek v meste [B]nemá byť [C]sám. [C]
+[Dm]Sklá výkladov [B]zrkadlia tvár,
+[Gm]sen sa túla [B]po uli[C]ciach,
+[Dm]ja hľadám pár, [B]ty dotyk rúk,
+[Gm]človek v meste [B]nemá byť [C]sám. [C]
 {end_of_bridge}
 
 {start_of_verse}

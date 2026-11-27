@@ -4,8 +4,8 @@ versions:
   v1:
     id: ivan_hlas-na_kolena_1774984809410
     createdAt: '2026-03-31T19:20:09.000Z'
-    updatedAt: '2026-11-22T11:32:12.000Z'
-    revision: 4
+    updatedAt: '2026-11-26T13:21:52.000Z'
+    revision: 5
     youtubeId: odpPO2SCsk0
 prompts:
   - id: ivan_hlas-na_kolena_gpt-5.4-mini_v7

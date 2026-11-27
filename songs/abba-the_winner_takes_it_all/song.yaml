@@ -1,0 +1,30 @@
+songId: abba-the_winner_takes_it_all
+official: v1
+versions:
+  v1:
+    id: 1b0fbd1a-ed72-4fdb-a23d-1c6fb1f0513d
+    createdAt: '2026-11-25T19:35:49.000Z'
+    updatedAt: '2026-11-25T19:35:49.000Z'
+    revision: 1
+    youtubeId: 92cwKCU8Z5c
+prompts:
+  - id: abba-the_winner_takes_it_all_gpt-5.4-mini_v7
+    songId: abba-the_winner_takes_it_all
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic scene of a lone woman standing small at the edge
+      of a dimly lit stage after a dramatic competition, the victorious couple
+      silhouetted in the bright background, one person extending a cold
+      handshake while she looks away with quiet heartbreak; subtle sense of
+      loss, jealousy, and finality, sparse symbolic details like a single
+      scattered playing card on the floor, moody blue-gray palette, strong
+      spotlight and deep shadows, shallow depth of field, simple composition, no
+      text
+    createdAt: 2026-11-25T19:35:54.000Z
+    updatedAt: 2026-11-25T19:35:54.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1795635363000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

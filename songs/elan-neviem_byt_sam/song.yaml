@@ -4,8 +4,8 @@ versions:
   v1:
     id: elan-neviem_byt_sam_1785414706910
     createdAt: '2026-07-30T12:31:46.000Z'
-    updatedAt: '2026-07-30T12:41:29.000Z'
-    revision: 4
+    updatedAt: '2026-11-26T13:16:46.000Z'
+    revision: 5
     youtubeId: mu1C4Wtaf54
 prompts:
   - id: elan-neviem_byt_sam_gpt-5.4-mini_v7

@@ -26,3 +26,21 @@ prompts:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev
         filename: FLUX.1-dev.webp
+  - id: honza_jicha-marinka_gpt-6.1-terra_v9
+    songId: honza_jicha-marinka
+    summaryPromptVersion: v9
+    summaryModel: gpt-6.1-terra
+    text: >-
+      A witty retro Czech cartoon illustration: inside a prehistoric cave, a
+      charming woman in an elegant vintage dress lounges beside her bewildered
+      modern boyfriend, holding a cigarette and a folding fan. On the cave wall
+      behind them, she has drawn his portrait in red ochre; at the entrance, a
+      wary hyena clutches a squirrel. Warm firelight, expressive faces, bold
+      shapes, playful absurdity, no text.
+    createdAt: 2026-11-26T12:31:12.000Z
+    updatedAt: 2026-11-26T12:31:12.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1795696318000
+        imageModel: gpt-image-2.6-flare
+        filename: gpt-image-2.6-flare.webp

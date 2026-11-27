@@ -5,8 +5,8 @@
 {range: g1-e1}
 {language: czech}
 {startMelody: d}
-{illustrationId: olympic-jasna_zprava_gpt-4o-mini_v1_flux.1-dev}
-{promptId: olympic-jasna_zprava_gpt-4o-mini_v1}
+{illustrationId: olympic-jasna_zprava_gpt-6.1-terra_v9_gpt-image-2.6-flare}
+{promptId: olympic-jasna_zprava_gpt-6.1-terra_v9}
 
 {start_of_interlude}
 𝄆 [G][Em][C][D][Am][C][G] 𝄇

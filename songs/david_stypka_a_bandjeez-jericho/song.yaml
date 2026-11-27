@@ -1,0 +1,30 @@
+songId: david_stypka_a_bandjeez-jericho
+official: v1
+versions:
+  v1:
+    id: david_stypka_a_bandjeez-jericho_1780778141463
+    createdAt: '2026-06-06T20:35:41.000Z'
+    updatedAt: '2026-11-25T19:33:16.000Z'
+    revision: 2
+    youtubeId: Kvtb4uGFKTg
+prompts:
+  - id: david_stypka_a_bandjeez-jericho_gpt-5.4-mini_v7
+    songId: david_stypka_a_bandjeez-jericho
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic scene of a wounded woman slowly standing up in a
+      rain-soaked alley at dawn, an unseen doctor in the foreground gently
+      removing her bandage, both framed in a quiet moment of healing and
+      parting; wet cobblestones, soft drizzle washing away dust, distant
+      silhouette of a ruined ancient city with faint trumpet-like hints on the
+      horizon, somber yet hopeful mood, muted blue-gray palette, soft diffused
+      overcast lighting, subtle shallow depth of field, no text, minimal
+      composition, emotionally intimate and symbolic
+    createdAt: 2026-11-20T16:26:36.000Z
+    updatedAt: 2026-11-20T16:26:36.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1795192007000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

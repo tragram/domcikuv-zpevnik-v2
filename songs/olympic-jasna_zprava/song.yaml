@@ -26,3 +26,21 @@ prompts:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev
         filename: FLUX.1-dev.webp
+  - id: olympic-jasna_zprava_gpt-6.1-terra_v9
+    songId: olympic-jasna_zprava
+    summaryPromptVersion: v9
+    summaryModel: gpt-6.1-terra
+    text: >-
+      A lonely man stands barefoot in a small apartment before dawn, looking
+      toward an empty window. Around him lie traces of a departed lover: a
+      bottle of apple-scented bath foam, a telephone with its cord cut, and an
+      open book showing two figures flying together. Melancholic 1980s Czech
+      album-cover illustration, softly textured gouache, muted blue-gray shadows
+      and a faint warm glow from a bedside lamp. No text.
+    createdAt: 2026-11-26T12:25:53.000Z
+    updatedAt: 2026-11-26T12:25:53.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1795695977000
+        imageModel: gpt-image-2.6-flare
+        filename: gpt-image-2.6-flare.webp

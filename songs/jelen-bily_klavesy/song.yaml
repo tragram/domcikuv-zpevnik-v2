@@ -1,0 +1,29 @@
+songId: jelen-bily_klavesy
+official: v1
+versions:
+  v1:
+    id: 517e03ca-f3de-4d71-ac6e-c7432cdeb4c1
+    createdAt: '2026-11-25T18:36:47.000Z'
+    updatedAt: '2026-11-25T20:21:00.000Z'
+    revision: 3
+    youtubeId: '-ONrtVRZWe4'
+prompts:
+  - id: jelen-bily_klavesy_gpt-5.4-mini_v7
+    songId: jelen-bily_klavesy
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic scene of an intimate pre-dawn apartment: a woman
+      with smudged eyeliner calmly painting her eyes while sipping tea beside a
+      white piano, soft butterfly resting in her hair like a fallen leaf, open
+      window with the first pale sunrise spilling in after a long night, quiet
+      emotional mood of relief and devotion, simple composition, shallow depth
+      of field, gentle warm-cool contrast, subtle film grain, no text, minimal
+      details to keep it legible at small size
+    createdAt: 2026-11-25T18:36:53.000Z
+    updatedAt: 2026-11-25T18:36:53.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1795631822000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

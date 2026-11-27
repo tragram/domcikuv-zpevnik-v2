@@ -26,7 +26,8 @@ my [Dmi]už tu nebudem, [G7]ach, pýcho marnivá,
 [Ami]O vodě, o trávě, [Dmi]o lese,
 [G7]o smrti, se kterou smířit [C]nejde se, [E7]
 [Ami]o lásce, o zradě, [Dmi]o světě
-[E]a o všech lidech, co [E7]kdy žili na téhle [Ami]planetě. [Dmi][E7]
+[E]a o všech lidech,
+co [E7]kdy žili na téhle [Ami]planetě. [Dmi][E7]
 {end_of_chorus}
 
 {start_of_verse}
@@ -65,5 +66,6 @@ my [C]už tu nebudem, ale [E7]jiný jí zazpívá.
 [Ami]O vodě, o trávě, [Dmi]o lese,
 [G7]o smrti, se kterou smířit [C]nejde se, [E7]
 [Ami]o lásce, o zradě, [Dmi]o světě
-[E]bude to písnička [E7]o nás a [Ami]kometě.[Dmi][E7][Ami]
+[E]bude to písnička
+[E7]o nás a [Ami]kometě.[Dmi][E7][Ami]
 {end_of_chorus}

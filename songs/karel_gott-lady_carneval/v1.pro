@@ -1,6 +1,6 @@
 {title: Lady Carneval}
 {artist: Karel Gott}
-{key: E}
+{key: C}
 {capo: 0}
 {language: czech}
 {illustrationId: karel_gott-lady_carneval_gpt-5-mini_v6_nano-banana-2}
@@ -31,16 +31,18 @@ teď už v srdci chovám [D7]jen Lady [G7]Carne[C]val.
 {chorus}
 
 {start_of_verse}
-Šalala ... lalali
+Lalala lala la lala lala lá
+Šalala lala la lala lala li
+[C]Lalala lala la lala [G7]lala [C]lá
+Šalala lala [D7]la lala [G7]lala [C]li
 {end_of_verse}
 
 {chorus}
 
 {start_of_verse}
-[C♯]Páni a paní vím jak se [G♯]ruší [C♯]žal
-já tíhnu duší [D♯]jen k lady [G♯]Karne[C♯]val.
-Já kdysi pannám, já ba i [G♯]vdovám [C♯]lhal
-teď v srdci chovám, [D♯]jen lady [G♯]Karne[C♯]val.
+[C♯]Páni a paní vím jak se [G♯7]ruší [C♯]žal
+já tíhnu duší [D♯7]jen k lady [G♯7]Karne[C♯]val.
+Já kdysi pannám, já ba i [G♯7]vdovám [C♯]lhal
+teď v srdci chovám, [D♯7]jen lady [G♯7]Karne[C♯]val.
 [C♯]Teď v srdci chovám, [D♯]jen la[G♯]dy Karne[C♯]val
-[C♯]Teď v srdci chovám [D♯]jen Lady [G♯]Carne[C♯]val.
 {end_of_verse}
