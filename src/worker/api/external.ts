@@ -59,8 +59,18 @@ export const externalRoutes = buildApp()
       const newSongId = songBaseId(title, artist);
 
       const response = await fetch(url);
-      if (!response.ok) return errorJSend(c, "Source fetch failed", 502);
-
+      if (!response.ok) {
+        const body = await response.text().catch(() => "");
+        console.error("Source fetch failed", {
+          url,
+          status: response.status,
+          cfMitigated: response.headers.get("cf-mitigated"),
+          server: response.headers.get("server"),
+          body: body.slice(0, 300),
+        });
+        return errorJSend(c, "Source fetch failed", 502);
+      }
+      
       let unparsedLyrics = "";
       // Set by sources whose scraper already produces ChordPro
       let finishChordPro = null as (() => string) | null;

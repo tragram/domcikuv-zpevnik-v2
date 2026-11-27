@@ -9,9 +9,9 @@ export async function searchAllExternalServices(
   env: Env,
 ): Promise<ExternalSearchResult[]> {
   const results = await Promise.all([
-    searchPisnickyAkordy(query, env.PA_BEARER_TOKEN),
+    // searchPisnickyAkordy(query, env.PA_BEARER_TOKEN),
     searchZpevnikSkorepova(query, env.KV),
-    searchCifraClub(query),
+    // searchCifraClub(query),
     searchAkordyKytary(query)
   ]);
 
